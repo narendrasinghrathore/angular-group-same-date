@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import {
+  Component, ChangeDetectionStrategy,
+  NgZone
+} from '@angular/core';
 import { ProductModelNamespace } from '../models/sample.model';
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy
+    .OnPush
 })
 export class AppComponent {
 
@@ -145,29 +150,36 @@ export class AppComponent {
 
   name = 'Angular';
 
+  constructor(private ngzone: NgZone) { }
+
   ngOnInit() {
-    let dateRepeated: Date = null;
-    this.data.forEach((item: ProductModelNamespace.Product) => {
-      // if same date
-      if (dateRepeated === item.lotInfo.expirationDate) {
+    this.filterData();
 
-        const itemIndex = this.filteredData
-          .findIndex((i: ProductModelNamespace.ProductFiltered) =>
-            i.date === dateRepeated);
-        this.filteredData[itemIndex].list.push(item.productMasterLotId);
-        return;
-      }
-      // If date is not matching then
-      {
+  }
 
-        dateRepeated = item.lotInfo.expirationDate;
-        this.filteredData.push({
-          date: dateRepeated,
-          list: [item.productMasterLotId]
-        })
-      }
+  filterData() {
+    this.ngzone.runOutsideAngular(() => {
+      let dateRepeated: Date = null;
+      this.data.forEach((item: ProductModelNamespace.Product) => {
+        // if same date
+        if (dateRepeated === item.lotInfo.expirationDate) {
 
+          const itemIndex = this.filteredData
+            .findIndex((i: ProductModelNamespace.ProductFiltered) =>
+              i.date === dateRepeated);
+          this.filteredData[itemIndex].list.push(item.productMasterLotId);
+          return;
+        }
+        // If date is not matching then
+        {
 
+          dateRepeated = item.lotInfo.expirationDate;
+          this.filteredData.push({
+            date: dateRepeated,
+            list: [item.productMasterLotId]
+          });
+        }
+      });
     });
   }
 
