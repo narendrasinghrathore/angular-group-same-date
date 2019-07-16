@@ -2,7 +2,7 @@
 <ul>
 	<ng-container *ngFor="let obj of filteredData">
 		<li>
-			{{obj.date |date}}
+			{{obj?.date |date}}
       <ol>
         <ng-container *ngFor="let item of obj?.list">
           <li>{{item}}</li>
