@@ -11,6 +11,7 @@ import { ProductModelNamespace } from '../models/sample.model';
     .OnPush
 })
 export class AppComponent {
+  
 
   data: ProductModelNamespace.Product[] = [
     {
