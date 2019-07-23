@@ -1,34 +1,34 @@
 export module ProductModelNamespace {
 
-    export interface ProductInfo {
+     export interface InstrumentInfo {
         id: number;
         name: string;
         manufacturerId: number;
         manufacturerName: string;
-        matrixId: number;
-        matrixName: string;
     }
 
-    export interface LotInfo {
+    export interface ParentInstrument {
+        displayName: string;
+        instrumentId: string;
+        instrumentCustomName: string;
+        instrumentSerial: string;
+        instrumentInfo: InstrumentInfo;
+        levelSettings?: any;
+        id: string;
+        parentNodeId: string;
+        parentNode?: any;
+        nodeType: number;
+        children?: any;
+    }
+
+    export interface RootObject {
         id: number;
         productId: number;
         productName: string;
         lotNumber: string;
         expirationDate: string;
-    }
-
-    export interface Product {
-        displayName: string;
-        productId: string;
-        productMasterLotId: string;
-        productCustomName: string;
-        productInfo: ProductInfo;
-        lotInfo: LotInfo;
-        levelSettings?: any;
-        id: string;
-        parentNodeId: string;
-        nodeType: number;
-        children?: any;
+        actionableType: number;
+        parentInstrument: ParentInstrument;
     }
 
     export interface ProductFiltered {
