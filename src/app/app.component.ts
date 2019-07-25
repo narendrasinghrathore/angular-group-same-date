@@ -12,7 +12,7 @@ import { ProductModelNamespace } from '../models/sample.model';
 })
 export class AppComponent {
 
- selectedItem : any;
+  selectedItem: any;
   data: ProductModelNamespace.RootObject[]
     = [
       {
@@ -776,6 +776,8 @@ export class AppComponent {
 
   name = 'Angular';
 
+  multipleItems:string;
+
   constructor(private ngzone: NgZone) { }
 
   ngOnInit() {
@@ -796,14 +798,14 @@ export class AppComponent {
 
         // if same date
         if (itemIndex > -1) {
-          this.filteredData[itemIndex].list.push({ name: item.productName, id: item.lotNumber});
+          this.filteredData[itemIndex].list.push({ name: item.productName, id: item.parentInstrument.id });
           return;
         }
         // If date is not matching
         this.filteredData.push({
           date: dateRepeated,
-          list: [ { name: item.productName, id: item.lotNumber}],
-         
+          list: [{ name: item.productName, id: item.parentInstrument.id }],
+
         });
 
 
@@ -813,13 +815,30 @@ export class AppComponent {
     });
   }
 
-  getData(id){
+  getData(id) {
+    this.checkIfMultiple(id);
     const index = this.data.findIndex(
-      item => item.lotNumber === id);
-      console.log(index)
-      if(index > -1){
-        this.selectedItem = this.data[index]
-      }
+      item => item.parentInstrument.id === id);
+
+    if (index > -1) {
+      this.selectedItem = this.data[index]
+    }
+  }
+
+  /**
+   * Don't use this , this method is demo purpose to let you know that id is not 
+   * unique, we would require a unique id, the given data doesn't have any id.
+   * Most of id's are repeated
+   */
+  checkIfMultiple(id) {
+    const arr = this.data.filter(item => item.parentInstrument.id === id);
+    if (arr.length > 1) {
+    this.multipleItems  = `Selected item has multiple occurence in given data.
+      Total: ${arr.length}`;
+
+      return;
+    }
+    this.multipleItems = `Selected item has only one occurence in given data`;
   }
 
 
