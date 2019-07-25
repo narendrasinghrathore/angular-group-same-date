@@ -33,7 +33,7 @@ export module ProductModelNamespace {
 
     export interface ProductFiltered {
       date: string;
-      list: {id:string, name:string}[];
+      list: Array<{id:string, name:string}>[];
     }
 
 }

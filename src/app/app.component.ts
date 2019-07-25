@@ -798,13 +798,16 @@ export class AppComponent {
 
         // if same date
         if (itemIndex > -1) {
-          this.filteredData[itemIndex].list.push({ name: item.productName, id: item.parentInstrument.id });
+          this.filteredData[itemIndex]
+          .list
+          .push(
+            {  id: item.parentInstrument.id, name: item.productName });
           return;
         }
         // If date is not matching
         this.filteredData.push({
           date: dateRepeated,
-          list: [{ name: item.productName, id: item.parentInstrument.id }],
+          list: [{ id: item.parentInstrument.id, name: item.productName,  }],
 
         });
 
