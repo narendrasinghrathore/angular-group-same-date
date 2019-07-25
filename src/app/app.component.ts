@@ -776,7 +776,7 @@ export class AppComponent {
 
   name = 'Angular';
 
-  multipleItems:string;
+  multipleItems: string;
 
   constructor(private ngzone: NgZone) { }
 
@@ -799,15 +799,23 @@ export class AppComponent {
         // if same date
         if (itemIndex > -1) {
           this.filteredData[itemIndex]
-          .list
-          .push(
-            {  id: item.parentInstrument.id, name: item.productName });
+            .list
+            .push(
+              {
+                id: item.parentInstrument.id,
+                name: item.productName
+              });
           return;
         }
         // If date is not matching
         this.filteredData.push({
           date: dateRepeated,
-          list: [{ id: item.parentInstrument.id, name: item.productName,  }],
+          list: [
+            {
+              id: item.parentInstrument.id,
+              name: item.productName
+            }
+          ],
 
         });
 
@@ -836,7 +844,7 @@ export class AppComponent {
   checkIfMultiple(id) {
     const arr = this.data.filter(item => item.parentInstrument.id === id);
     if (arr.length > 1) {
-    this.multipleItems  = `Selected item has multiple occurence in given data.
+      this.multipleItems = `Selected item has multiple occurence in given data.
       Total: ${arr.length}`;
 
       return;
