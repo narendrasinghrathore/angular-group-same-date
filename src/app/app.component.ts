@@ -12,7 +12,7 @@ import { ProductModelNamespace } from '../models/sample.model';
 })
 export class AppComponent {
 
-
+ selectedItem : any;
   data: ProductModelNamespace.RootObject[]
     = [
       {
@@ -796,13 +796,14 @@ export class AppComponent {
 
         // if same date
         if (itemIndex > -1) {
-          this.filteredData[itemIndex].list.push(item.productName);
+          this.filteredData[itemIndex].list.push({ name: item.productName, id: item.lotNumber});
           return;
         }
         // If date is not matching
         this.filteredData.push({
           date: dateRepeated,
-          list: [item.productName]
+          list: [ { name: item.productName, id: item.lotNumber}],
+         
         });
 
 
@@ -810,6 +811,15 @@ export class AppComponent {
 
       });
     });
+  }
+
+  getData(id){
+    const index = this.data.findIndex(
+      item => item.lotNumber === id);
+      console.log(index)
+      if(index > -1){
+        this.selectedItem = this.data[index]
+      }
   }
 
 

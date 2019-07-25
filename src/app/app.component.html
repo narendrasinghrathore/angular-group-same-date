@@ -5,9 +5,14 @@
 			{{obj?.date |date}}
       <ol>
         <ng-container *ngFor="let item of obj?.list">
-          <li>{{item}}</li>
+          <li (click)="getData(item.id)">{{item.name}}</li>
         </ng-container>
         </ol>
 		</li>
 	</ng-container>
 </ul>
+<p>
+  {{
+    selectedItem | json
+  }}
+</p>
